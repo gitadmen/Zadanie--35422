@@ -1,36 +1,31 @@
-let btnGetData = document.getElementById('get-data');
+$(document).ready(function() {
+
+    $('#get-data').click(function() {
+
+        $.getJSON('https://akademia108.pl/api/ajax/get-post.php')
+            .done(function(data) {
 
 
-const getData = () => {
-    fetch('https://akademia108.pl/api/ajax/get-post.php')
-        .then(res => res.json())
-        .then(data => {
+                let pId = $('<p></p>').text(`Post ID: ${data.id}`)
+                let pUserId = $('<p></p>').text(`Post ID: ${data.userId}`)
+                let pTitle = $('<p></p>').text(`Post ID: ${data.title}`)
+                let pBody = $('<p></p>').text(`Post ID: ${data.body}`)
+                let hr = $('<hr />');
+                let myDiv = $('<div></div>')
 
-            let pId = document.createElement('p')
-            let pUserId = document.createElement('p')
-            let pTitle = document.createElement('p')
-            let pBody = document.createElement('p')
-            let hr = document.createElement('hr')
+                let jqBody = $('body')
 
-            pId.innerText = `Post ID: ${data.id}`
-            pUserId.innerText = `User ID: ${data.userId}`
-            pTitle.innerText = `Post ID: ${data.title}`
-            pBody.innerText = `Post ID: ${data.body}`
-
-            document.body.appendChild(pId);
-            document.body.appendChild(pUserId);
-            document.body.appendChild(pTitle);
-            document.body.appendChild(pBody);
-            document.body.appendChild(hr);
-
-            console.log(data)
-
-        })
-        .catch(error => {
-            console.error(error);
-        })
+                jqBody.append(myDiv)
+                myDiv.append(pId)
+                myDiv.append(pUserId)
+                myDiv.append(pTitle)
+                myDiv.append(pBody)
+                jqBody.append(hr)
 
 
-}
-
-btnGetData.addEventListener('click', getData);
+            })
+            .fail(function(error) {
+                console.log(error);
+            })
+    })
+})
